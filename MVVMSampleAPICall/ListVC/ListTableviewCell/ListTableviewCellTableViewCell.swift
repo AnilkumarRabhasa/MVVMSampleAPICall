@@ -22,9 +22,8 @@ class ListTableviewCellTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func displayDataIntoTable(title: String) {
-        titleLabel.text = title
-        titleLabel.numberOfLines = 0
+    func displayDataIntoTable(list: Posts) {
+        titleLabel.text = list.title
     }
     
 }

@@ -7,25 +7,23 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+class ViewController: UIViewController {
+    
     //outlets
     @IBOutlet weak var listTableview: UITableView!
     let listViewmodel = ListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-            //register cell
         self.configureTable()
+        self.reloadTable()
     }
     
     func configureTable() {
         listTableview.register(UINib(nibName: "ListTableviewCellTableViewCell", bundle: nil), forCellReuseIdentifier: "tableviewCellIdentifier")
         listTableview.delegate = self
         listTableview.dataSource = self
-        self.reloadTable()
-
+        
     }
     
     func reloadTable() {
@@ -35,24 +33,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
     }
+}
+
+// Pragma UITableview Data source and Delegate methods
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listViewmodel.postss.count
     }
     
-func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
-    if let cell = tableView.dequeueReusableCell(withIdentifier: "tableviewCellIdentifier") as? ListTableviewCellTableViewCell {
-        cell.displayDataIntoTable(title: listViewmodel.postss[indexPath.row].title)
-        return cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "tableviewCellIdentifier") as? ListTableviewCellTableViewCell {
+            cell.displayDataIntoTable(list: listViewmodel.postss[indexPath.row])
+            return cell
+        }
+        
+        return UITableViewCell()
     }
     
-    return UITableViewCell()
-}
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-
 }
 
